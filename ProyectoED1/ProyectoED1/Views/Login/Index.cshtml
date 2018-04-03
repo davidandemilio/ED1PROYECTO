@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+
+}
+
+<p><a href="/Usuario/Create" class="btn btn-primary btn-lg">Registrarse&raquo;</a></p>
+
+
+<h2>Login</h2>
+
+@using (Html.BeginForm("verificar", "Login", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        
+        <label>usuario</label>
+        <input type="text" name="user" />
+        <br>
+        <br>
+        <label>password</label>
+        <input type="password" name="pass" />
+        <input type="submit" value="Login" />
+    </div>
+}
+
+
