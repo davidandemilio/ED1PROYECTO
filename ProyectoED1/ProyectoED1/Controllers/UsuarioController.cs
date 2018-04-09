@@ -9,7 +9,7 @@ namespace ProyectoED1.Controllers
 {
     public class UsuarioController : Controller
     {
-        DefaultConnection db = DefaultConnection.getInstance;
+        DefaultConnection<Filme,string> db = DefaultConnection<Filme, string>.getInstance;
         // GET: Usuario
         public ActionResult Index()
         {
@@ -20,7 +20,7 @@ namespace ProyectoED1.Controllers
      
         public ActionResult Details(string id)
         {
-            Usuario usuario_buscado = db.usuarios.Find(x => x.username == id);
+            Usuario usuario_buscado = db.usuarios.buscar(id);
             return View(usuario_buscado);
         }
 
@@ -38,13 +38,13 @@ namespace ProyectoED1.Controllers
            
             try
             {
-                if (db.usuarios.Exists(x => x.username.Equals(user.username)))
+                if (db.usuarios.existe(user.username))
                 {
                     Response.Write("<script>alert('usuario ya existe');</script>");
                     return View();
                 }
                 else {
-                    db.usuarios.Add(user);
+                    db.usuarios.insertar(user,user.username);
                     Response.Write("<script>alert('usuario creado');</script>");
                     return View();
                 }

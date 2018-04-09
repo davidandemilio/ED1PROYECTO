@@ -11,7 +11,8 @@ namespace TDA
         public Nodo<T, K> raiz { get; set; }
         public int grado { get; set; }
         public ComparadorNodosDelegate<K>  comparador_;
-     
+        private int noelementos;
+        private T buscado;
 
        public ArbolB(int _grado,K llave,ComparadorNodosDelegate<K> comparador) {
             grado = _grado;
@@ -43,7 +44,65 @@ namespace TDA
         {
 
         }
-     
+
+        public T  buscar(K llave)
+        {
+            buscado = default(T);
+            buscar_interno(raiz, llave);
+          
+            return buscado;
+        }
+
+        public bool existe(K llave)
+
+        {
+           
+            buscar( llave);
+            if (buscado == null)
+            {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+
+
+        public void buscar_interno(Nodo<T, K> nodo_start, K llave)
+        {
+            for (int j = 0; j <= nodo_start.elementos.Count - 1; j++)
+            {
+                if (nodo_start.elementos.ElementAt(j).Value.CompareTo(llave)==0)
+                {
+                    buscado= nodo_start.elementos.ElementAt(j).Value.valor;
+
+
+                }
+            }
+          
+            for (int j = 0; j <= nodo_start.hijos.Count - 1; j++)
+            {
+                buscar_interno(nodo_start.hijos.ElementAt(j).Value,llave);
+               
+            }
+
+           
+
+        }
+
+        private void contar_interno(Nodo<T,K> nodo_start)
+        {
+            noelementos = nodo_start.elementos.Count+noelementos;
+            for (int j = 0; j <= nodo_start.hijos.Count - 1; j++) {
+                contar_interno(nodo_start.hijos.ElementAt(j).Value);
+            }
+        }
+
+        public int contar() {
+            contar_interno(raiz);
+            return noelementos;
+        }
+
 
         public void separar(Nodo<T, K> actual)
         {

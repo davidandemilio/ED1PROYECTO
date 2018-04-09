@@ -10,7 +10,7 @@ namespace ProyectoED1.Controllers
 {
     public class FilmeController : Controller
     {
-        DefaultConnection db = DefaultConnection.getInstance;
+        DefaultConnection<Filme,string> db = DefaultConnection<Filme, string>.getInstance;
         // GET: Filme
         public ActionResult Index()
         {

@@ -4,34 +4,39 @@ using System.Linq;
 using System.Web;
 using ProyectoED1.Models;
 using TDA;
+using TDA.Interfaces;
 namespace ProyectoED1.DBContest
 {
-    public class DefaultConnection
+    public class DefaultConnection<T,K>
     {
-        private static volatile DefaultConnection Instance;
+        private static volatile DefaultConnection<T,K> Instance;
         private static object syncRoot = new Object();
-
-        public List<Usuario> usuarios = new List<Usuario>();
-        public ArbolB<Filme, string> catalogo = new ArbolB<Filme, string>();
+        
+       private static ComparadorNodosDelegate<K> comparador;
+        public ArbolB<Usuario, string> usuarios = new ArbolB<Usuario, string> (3,"", comparadorusuarios);
+        public ArbolB<T, K> catalogo = new ArbolB<T, K>(3,default(K),comparador);
 
         public List<string> Ids = new List<string>();
         public int IDActual { get; set; }
 
+        public static int comparadorusuarios(string actual,string other) {
+            return other.CompareTo(actual);
+        }
      
 
 
-        private DefaultConnection()
+        public DefaultConnection()
         {
-            if (usuarios.Count == 0)
+            if (usuarios.contar() == 0)
             {
                 IDActual = 0;
             }else
             {
-                IDActual = usuarios.Count - 1;
+                IDActual = usuarios.contar() - 1;
             }
         }
 
-        public static DefaultConnection getInstance
+        public static DefaultConnection<T,K> getInstance
         {
 
             get
@@ -44,7 +49,7 @@ namespace ProyectoED1.DBContest
 
                         if (Instance == null)
                         {
-                            Instance = new DefaultConnection();
+                            Instance = new DefaultConnection<T,K>();
                         }
                     }
                 }

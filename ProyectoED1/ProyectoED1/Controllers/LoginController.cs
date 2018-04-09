@@ -14,14 +14,22 @@ namespace ProyectoED1.Controllers
         {
             return View();
         }
-        DefaultConnection db = DefaultConnection.getInstance;
+        DefaultConnection<Filme,string> db = DefaultConnection<Filme, string>.getInstance;
 
 
     
 
         public ActionResult verificar(string user,string pass)
         {
-            Usuario usuario = db.usuarios.Find(x => x.username.Equals(user) && x.password.Equals(pass));
+            Usuario usuario=null;
+            Usuario buscado = db.usuarios.buscar(user);
+            if (buscado != null) {
+                if (buscado.username == user && buscado.password == pass)
+                {
+                    usuario = buscado;  
+            }
+            }
+            
             if (usuario != null)
             {
                 UsuarioController uscontro = new UsuarioController();
