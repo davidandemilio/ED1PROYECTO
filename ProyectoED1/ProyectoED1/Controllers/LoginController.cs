@@ -17,33 +17,40 @@ namespace ProyectoED1.Controllers
         DefaultConnection<Filme,string> db = DefaultConnection<Filme, string>.getInstance;
 
 
-    
 
-        public ActionResult verificar(string user,string pass)
+
+        public ActionResult verificar(string user, string pass)
         {
-            Usuario usuario=null;
-            Usuario buscado = db.usuarios.buscar(user);
-            if (buscado != null) {
-                if (buscado.username == user && buscado.password == pass)
-                {
-                    usuario = buscado;  
-            }
-            }
-            
-            if (usuario != null)
+            if(user=="admin"&& user == "admin")
             {
-                UsuarioController uscontro = new UsuarioController();
+                return RedirectToAction("Index", "Filme");
+
+            } else {
+                Usuario usuario = null;
+                Usuario buscado = db.usuarios.buscar(user);
+                if (buscado != null)
+                {
+                    if (buscado.username == user && buscado.password == pass)
+                    {
+                        usuario = buscado;
+                    }
+                }
+
+                if (usuario != null)
+                {
+                    UsuarioController uscontro = new UsuarioController();
 
 
 
-                return RedirectToAction("Details", "Usuario", new { id = usuario.username });
-   
+                    return RedirectToAction("Details", "Usuario", new { id = usuario.username });
+
+                }
+                else
+                {
+
+                    return View("Index");
+                }
             }
-            else {
-
-                return View("Index");
-            }
-          
            
         }
 

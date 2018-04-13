@@ -5,12 +5,15 @@ using System.Web;
 using System.Web.Mvc;
 using ProyectoED1.DBContest;
 using ProyectoED1.Models;
+using TDA;
 namespace ProyectoED1.Controllers
 {
     public class UsuarioController : Controller
     {
         DefaultConnection<Filme,string> db = DefaultConnection<Filme, string>.getInstance;
         // GET: Usuario
+
+        
         public ActionResult Index()
         {
             return View();
@@ -21,6 +24,7 @@ namespace ProyectoED1.Controllers
         public ActionResult Details(string id)
         {
             Usuario usuario_buscado = db.usuarios.buscar(id);
+            db.usuariologeado = usuario_buscado;
             return View(usuario_buscado);
         }
 
@@ -30,7 +34,36 @@ namespace ProyectoED1.Controllers
 
             return View();
         }
+        public void asignar_comparador(elemento<Filme, string> actual)
+        {
+            actual.comparador = comparadorfilmes;
+        }
+        public ActionResult logout()
+        {
+            db.usuarios.buscar(db.usuariologeado.username).WatchList = db.usuariologeado.WatchList;
+            db.usuarios.buscar(db.usuariologeado.username).WatchList_lista = db.usuariologeado.WatchList_lista;
 
+            db.usuariologeado = null;
+
+            return RedirectToAction("Index","Login");
+        }
+        public ActionResult Agregar(string id)
+        {
+            db.usuariologeado.WatchList_lista.Clear();
+            db.usuariologeado.WatchList.recorrer(asignar_comparador);
+            db.catalogo.recorrer(asignar_comparador);
+            db.usuariologeado.WatchList.insertar(db.catalogo.buscar(id), db.catalogo.buscar(id).Nombre);
+            db.usuariologeado.WatchList.recorrer(pasar_a_lista);
+            return RedirectToAction("Details",new { id = db.usuariologeado.username });
+        }
+        public static int comparadorfilmes(string actual, string Other)
+        {
+            return Other.CompareTo(actual);
+        }
+        public void pasar_a_lista(elemento<Filme, string> actual)
+        {
+            db.usuariologeado.WatchList_lista.Add(actual.valor);
+        }
         // POST: Usuario/Create
         [HttpPost]
         public ActionResult Create([Bind(Include = "nombre,apellido,edad,username,password")]Usuario user)

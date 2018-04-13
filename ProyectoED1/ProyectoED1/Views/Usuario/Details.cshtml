@@ -16,7 +16,9 @@
         <h4>Usuario</h4>
         <hr />
         <dl class="dl-horizontal">
+            
             <dt>
+               
                 @Html.DisplayNameFor(model => model.nombre)
             </dt>
     
@@ -33,14 +35,6 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.edad)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.edad)
-            </dd>
-    
-            <dt>
                 @Html.DisplayNameFor(model => model.username)
             </dt>
     
@@ -48,16 +42,41 @@
                 @Html.DisplayFor(model => model.username)
             </dd>
     
-            <dt>
-                @Html.DisplayNameFor(model => model.password)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.password)
-            </dd>
-    
-        </dl>
+            <h3>Agregar un filme tu watch list</h3>
+            <p><a href="/Filme/Catalogo_user" class="btn btn-primary btn-lg">Ir&raquo;</a></p>
+            @Html.ActionLink("Logout", "logout") 
     </div>
+
+    <table>@if (Model.WatchList_lista != null)
+    {
+        foreach (var item in Model.WatchList_lista)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tipo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.anio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.genero)
+                </td>
+                <td>
+                   
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+
+
+        }
+
+    }</table>
+     
+      
+       
     <br>
        <p>
         @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |

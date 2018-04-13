@@ -13,8 +13,11 @@ namespace TDA
         public ComparadorNodosDelegate<K>  comparador_;
         private int noelementos;
         private T buscado;
+        private Nodo<T, K> target;
+        private K keynodotarget;
+        private K key_target;
 
-       public ArbolB(int _grado,K llave,ComparadorNodosDelegate<K> comparador) {
+        public ArbolB(int _grado,K llave,ComparadorNodosDelegate<K> comparador) {
             grado = _grado;
             raiz = new Nodo<T, K>(llave);
             comparador_ = comparador;
@@ -40,14 +43,48 @@ namespace TDA
             }
         }
 
-        public void eliminar()
+        public void eliminar(K llave)
         {
+            buscar(llave);
 
+
+            if (target.hijos.Count == 0) {
+
+               Nodo<T,K> hermanoderecho= target.padre.hijos.ElementAt(target.padre.hijos.IndexOfKey(keynodotarget) + 1).Value;
+
+                if (hermanoderecho.elementos.Count > 1)
+                {
+                    target.elementos.Remove(key_target);
+                    target.elementos.Add(hermanoderecho.elementos.ElementAt(0).Key, hermanoderecho.elementos.ElementAt(0).Value);
+                    hermanoderecho.elementos.RemoveAt(0);
+                }
+                else {
+
+                }
+            }
+            else
+            {
+
+
+            }
+            if (target.elementos.Count > 1)
+            {
+                target.elementos.Remove(key_target);
+                
+            }
+            else {
+
+
+            }
+            
         }
 
         public T  buscar(K llave)
         {
             buscado = default(T);
+            target = null;
+            key_target = default(K);
+            keynodotarget = default(K);
             buscar_interno(raiz, llave);
           
             return buscado;
@@ -76,7 +113,17 @@ namespace TDA
                 {
                     buscado= nodo_start.elementos.ElementAt(j).Value.valor;
 
+                    target = nodo_start;
+                    key_target = nodo_start.elementos.ElementAt(j).Key;
+                    if (nodo_start.padre != null)
+                    {
+                        keynodotarget = nodo_start.padre.hijos.ElementAt(nodo_start.padre.hijos.IndexOfValue(nodo_start)).Key;
 
+                    }
+                    else {
+                        key_target= nodo_start.llave;
+                    }
+                    
                 }
             }
           
@@ -87,6 +134,34 @@ namespace TDA
             }
 
            
+
+        }
+
+
+
+        public void recorrer( RecorridoDelegate<T, K> recorrido)
+        {
+            recorrer_interno(raiz,recorrido);
+
+
+        }
+        public void recorrer_interno(Nodo<T, K> nodo_start,RecorridoDelegate<T,K> recorrido)
+        {
+            if (nodo_start != null) {
+                for (int j = 0; j <= nodo_start.elementos.Count - 1; j++)
+                {
+                    recorrido(nodo_start.elementos.ElementAt(j).Value);
+                }
+
+                for (int j = 0; j <= nodo_start.hijos.Count - 1; j++)
+                {
+                    recorrer_interno(nodo_start.hijos.ElementAt(j).Value, recorrido);
+
+                }
+
+            }
+
+
 
         }
 

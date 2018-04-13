@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using ProyectoED1.DBContest;
 using ProyectoED1.Models;
 using ProyectoED1.Controllers;
+using TDA;
 namespace ProyectoED1.Controllers
 {
     public class FilmeController : Controller
@@ -14,7 +15,22 @@ namespace ProyectoED1.Controllers
         // GET: Filme
         public ActionResult Index()
         {
-            return View();
+            return View(db.filmes_lista.ToList());
+        }
+
+        public ActionResult Catalogo_user()
+        {
+            return View(db.filmes_lista.ToList());
+        }
+
+        public void pasar_a_lista(elemento<Filme,string> actual)
+        {
+            db.filmes_lista.Add(actual.valor);
+        }
+
+        public void asignar_comparador(elemento<Filme, string> actual)
+        {
+            actual.comparador = comparadorfilmes;
         }
 
         // GET: Filme/Details/5
@@ -31,11 +47,20 @@ namespace ProyectoED1.Controllers
 
         // POST: Filme/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create([Bind(Include = "tipo,Nombre,anio,genero")]Filme partido)
         {
+         
+
             try
             {
-                // TODO: Add insert logic here
+                db.filmes_lista.Clear();
+                db.catalogo.recorrer(asignar_comparador);
+
+                elemento<Filme, string> nuevo_filme = new elemento<Filme, string>(partido,partido.Nombre,comparadorfilmes);
+               
+                db.catalogo.insertar(nuevo_filme.valor,nuevo_filme.valor.Nombre);
+               
+                db.catalogo.recorrer(pasar_a_lista);
 
                 return RedirectToAction("Index");
             }
@@ -43,6 +68,9 @@ namespace ProyectoED1.Controllers
             {
                 return View();
             }
+        }
+        public  int comparadorfilmes(string actual,string Other) {
+           return Other.CompareTo(actual);
         }
 
         // GET: Filme/Edit/5

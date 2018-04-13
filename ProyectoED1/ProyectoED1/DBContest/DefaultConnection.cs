@@ -15,10 +15,11 @@ namespace ProyectoED1.DBContest
        private static ComparadorNodosDelegate<K> comparador;
         public ArbolB<Usuario, string> usuarios = new ArbolB<Usuario, string> (3,"", comparadorusuarios);
         public ArbolB<T, K> catalogo = new ArbolB<T, K>(3,default(K),comparador);
-
+        
         public List<string> Ids = new List<string>();
+        public List<Filme> filmes_lista = new List<Filme>();
         public int IDActual { get; set; }
-
+       public Usuario usuariologeado;
         public static int comparadorusuarios(string actual,string other) {
             return other.CompareTo(actual);
         }
