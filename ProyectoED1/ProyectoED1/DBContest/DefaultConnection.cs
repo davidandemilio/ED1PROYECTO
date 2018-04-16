@@ -11,19 +11,52 @@ namespace ProyectoED1.DBContest
     {
         private static volatile DefaultConnection<T,K> Instance;
         private static object syncRoot = new Object();
-        
-       private static ComparadorNodosDelegate<K> comparador;
-        public ArbolB<Usuario, string> usuarios = new ArbolB<Usuario, string> (3,"", comparadorusuarios);
-        public ArbolB<T, K> catalogo = new ArbolB<T, K>(3,default(K),comparador);
-        
+    
+       
+        public ArbolB<Usuario, string> usuarios = new ArbolB<Usuario, string> (3,"", comparadorstring);
+        public ArbolB<Filme, string> catalogonombre = new ArbolB<Filme, string>(3,"", comparadorstring);
+        public ArbolB<Filme, Filme> catalogogenero = new ArbolB<Filme, Filme>(3, null, comparadorgeneros);
+        public ArbolB<Filme, Filme> catalogoanio = new ArbolB<Filme, Filme>(3, null, comparadoranio);
+
+
         public List<string> Ids = new List<string>();
         public List<Filme> filmes_lista = new List<Filme>();
         public int IDActual { get; set; }
        public Usuario usuariologeado;
-        public static int comparadorusuarios(string actual,string other) {
+
+        public static int comparadorgeneros(Filme actual, Filme Other)
+        {
+            if (Other.genero.CompareTo(actual.genero) == 0)
+            {
+
+              return  Other.Nombre.CompareTo(actual.Nombre);
+            }
+            else
+            {
+
+                return Other.genero.CompareTo(actual.genero);
+            }
+
+        }
+        public static int comparadoranio(Filme actual, Filme Other)
+        {
+            if (Other.anio.CompareTo(actual.anio) == 0)
+            {
+
+                return Other.Nombre.CompareTo(actual.Nombre);
+            }
+            else
+            {
+
+                return Other.anio.CompareTo(actual.anio);
+            }
+        }
+
+        public static int comparadorstring(string actual, string other)
+        {
             return other.CompareTo(actual);
         }
-     
+
 
 
         public DefaultConnection()

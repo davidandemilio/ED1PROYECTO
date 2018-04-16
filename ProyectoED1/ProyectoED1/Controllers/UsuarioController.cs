@@ -49,12 +49,21 @@ namespace ProyectoED1.Controllers
         }
         public ActionResult Agregar(string id)
         {
-            db.usuariologeado.WatchList_lista.Clear();
-            db.usuariologeado.WatchList.recorrer(asignar_comparador);
-            db.catalogo.recorrer(asignar_comparador);
-            db.usuariologeado.WatchList.insertar(db.catalogo.buscar(id), db.catalogo.buscar(id).Nombre);
-            db.usuariologeado.WatchList.recorrer(pasar_a_lista);
-            return RedirectToAction("Details",new { id = db.usuariologeado.username });
+            if (db.usuariologeado.WatchList.existe(id))
+            {
+                Response.Write("<script>alert('Ya tiene esta pelicula en su watchlist');</script>");
+                return RedirectToAction("Catalogo_user", "Filme");
+                
+            }
+            else {
+                db.usuariologeado.WatchList_lista.Clear();
+                db.usuariologeado.WatchList.recorrer(asignar_comparador);
+                db.catalogonombre.recorrer(asignar_comparador);
+                db.usuariologeado.WatchList.insertar(db.catalogonombre.buscar(id), db.catalogonombre.buscar(id).Nombre);
+                db.usuariologeado.WatchList.recorrer(pasar_a_lista);
+                return RedirectToAction("Details", new { id = db.usuariologeado.username });
+            }
+           
         }
         public static int comparadorfilmes(string actual, string Other)
         {

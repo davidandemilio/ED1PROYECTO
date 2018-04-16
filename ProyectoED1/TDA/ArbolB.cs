@@ -21,6 +21,11 @@ namespace TDA
             grado = _grado;
             raiz = new Nodo<T, K>(llave);
             comparador_ = comparador;
+            raiz.asignar_listas(comparador_);
+            
+           
+          
+         
         }
         public void insertar(T valor, K llave) {
 
@@ -148,16 +153,23 @@ namespace TDA
         public void recorrer_interno(Nodo<T, K> nodo_start,RecorridoDelegate<T,K> recorrido)
         {
             if (nodo_start != null) {
-                for (int j = 0; j <= nodo_start.elementos.Count - 1; j++)
+                for (int i = 0; i <= nodo_start.elementos.Count-1 ; i++)
                 {
-                    recorrido(nodo_start.elementos.ElementAt(j).Value);
+                    if (nodo_start.hijos.Count != 0)
+                    {
+                        recorrer_interno(nodo_start.hijos.ElementAt(i).Value, recorrido);
+
+                    }
+                    
+                    recorrido(nodo_start.elementos.ElementAt(i).Value);
+                    
+
+                }
+                if (nodo_start.hijos.Count != 0) {
+
+                    recorrer_interno(nodo_start.hijos.ElementAt(nodo_start.hijos.Count - 1).Value, recorrido);
                 }
 
-                for (int j = 0; j <= nodo_start.hijos.Count - 1; j++)
-                {
-                    recorrer_interno(nodo_start.hijos.ElementAt(j).Value, recorrido);
-
-                }
 
             }
 
@@ -183,13 +195,17 @@ namespace TDA
         {
 
             Nodo<T, K> derecho;
+           
           
             Nodo<T, K> izquierdo = new Nodo<T, K>(actual.elementos.ElementAt(0).Key);
+            izquierdo.asignar_listas(comparador_);
             Nodo<T, K> padre_actual = actual.padre;
+          
 
             if (grado % 2 == 0)
             {
                 derecho = new Nodo<T, K>(actual.elementos.ElementAt((grado / 2)).Key);
+                derecho.asignar_listas(comparador_);
                 if (actual.hijos.Count > 0)
                 {
                     for (int x = 0; x <= (grado / 2); x++)
@@ -227,6 +243,7 @@ namespace TDA
             else
             {
                 derecho = new Nodo<T, K>(actual.elementos.ElementAt((grado / 2) + 1).Key);
+                derecho.asignar_listas(comparador_);
 
                 if (actual.hijos.Count > 0)
                 {
@@ -331,6 +348,8 @@ namespace TDA
                 elemento<T, K> elemento_aniadir = new elemento<T, K>(valor, llave, comparador_);
                 nod.elementos.Add(llave, elemento_aniadir);
                 Nodo<T, K> temp = nod;
+               
+
                 nod.padre.hijos.Remove(nod.llave);
                 nod.padre.hijos.Add(nod.elementos.ElementAt(0).Key, temp);
               nod.llave = nod.elementos.ElementAt(0).Key;
