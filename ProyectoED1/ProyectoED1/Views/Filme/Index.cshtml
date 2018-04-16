@@ -10,6 +10,29 @@
     <title>View</title>
 </head>
 <body>
+
+    @using (Html.BeginForm("cambiar_orden", "Filme", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-group">
+
+            <select name="orden">
+
+                <option>nombre</option>
+
+                <option>genero</option>
+
+                <option>año</option>
+
+            </select>
+
+            <input type="submit" value="Seleccionar" />
+
+
+
+        </div>
+
+
+    }
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>

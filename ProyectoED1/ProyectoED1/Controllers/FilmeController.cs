@@ -12,10 +12,14 @@ namespace ProyectoED1.Controllers
     public class FilmeController : Controller
     {
         DefaultConnection<Filme,string> db = DefaultConnection<Filme, string>.getInstance;
+        
+        string seleccionorden="nombre";
         // GET: Filme
         public ActionResult Index()
-        {
+        { 
+           
             return View(db.filmes_lista.ToList());
+          
         }
 
         public ActionResult Catalogo_user()
@@ -28,10 +32,51 @@ namespace ProyectoED1.Controllers
             db.filmes_lista.Add(actual.valor);
         }
 
-        public void asignar_comparador(elemento<Filme, string> actual)
+        public void pasar_a_lista_gen(elemento<Filme, Filme> actual)
         {
-            actual.comparador = comparadorfilmes;
+            db.filmes_lista.Add(actual.valor);
         }
+        public void pasar_a_lista_int(elemento<Filme, Filme> actual)
+        {
+            db.filmes_lista.Add(actual.valor);
+        }
+
+        public void asignar_comparador_nombre(elemento<Filme, string> actual)
+        {
+            actual.comparador = comparadornombres;
+        }
+        public void asignar_comparador_genero(elemento<Filme, Filme> actual)
+        {
+            actual.comparador = comparadorgeneros;
+        }
+        public void asignar_comparador_anio(elemento<Filme, Filme> actual)
+        {
+            actual.comparador = comparadoranio;
+        }
+        public ActionResult cambiar_orden(string orden) {
+            seleccionorden = orden;
+            db.filmes_lista.Clear();
+            if (orden == "genero")
+            {
+                
+                db.catalogogenero.recorrer(pasar_a_lista_gen);
+
+            }
+            else if (orden == "nombre")
+            {
+                db.catalogonombre.recorrer(pasar_a_lista);
+
+            }
+            else if (orden == "año")
+            {
+                db.catalogoanio.recorrer(pasar_a_lista_int);
+
+            }
+
+            return RedirectToAction("Catalogo_user");
+        }
+
+
 
         // GET: Filme/Details/5
         public ActionResult Details(int id)
@@ -47,30 +92,85 @@ namespace ProyectoED1.Controllers
 
         // POST: Filme/Create
         [HttpPost]
-        public ActionResult Create([Bind(Include = "tipo,Nombre,anio,genero")]Filme partido)
+        public ActionResult Create([Bind(Include = "tipo,Nombre,anio,genero")]Filme filme)
         {
          
 
             try
             {
-                db.filmes_lista.Clear();
-                db.catalogo.recorrer(asignar_comparador);
+                if (!db.catalogonombre.existe(filme.Nombre))
+                {
+                    db.filmes_lista.Clear();
+                    db.catalogonombre.recorrer(asignar_comparador_nombre);
+                    db.catalogogenero.recorrer(asignar_comparador_genero);
+                    db.catalogoanio.recorrer(asignar_comparador_anio);
+                    elemento<Filme, string> nuevo_filme_no = new elemento<Filme, string>(filme, filme.Nombre, comparadornombres);
+                    elemento<Filme, Filme> nuevo_filme_ge = new elemento<Filme, Filme>(filme, filme, comparadorgeneros);
+                    elemento<Filme, Filme> nuevo_filme_an = new elemento<Filme, Filme>(filme, filme, comparadoranio);
 
-                elemento<Filme, string> nuevo_filme = new elemento<Filme, string>(partido,partido.Nombre,comparadorfilmes);
-               
-                db.catalogo.insertar(nuevo_filme.valor,nuevo_filme.valor.Nombre);
-               
-                db.catalogo.recorrer(pasar_a_lista);
+                    db.catalogonombre.insertar(nuevo_filme_no.valor, nuevo_filme_no.valor.Nombre);
+                    db.catalogogenero.insertar(nuevo_filme_ge.valor, nuevo_filme_ge.valor);
+                    db.catalogoanio.insertar(nuevo_filme_an.valor, nuevo_filme_an.valor);
 
-                return RedirectToAction("Index");
+                    if (seleccionorden == "genero")
+                    {
+                        db.catalogogenero.recorrer(pasar_a_lista_gen);
+
+                    }
+                    else if (seleccionorden == "nombre")
+                    {
+                        db.catalogonombre.recorrer(pasar_a_lista);
+
+                    }
+                    else if (seleccionorden == "anio")
+                    {
+                        db.catalogoanio.recorrer(pasar_a_lista_int);
+
+                    }
+
+                    return RedirectToAction("Index");
+                }
+                else {
+                    
+                    return RedirectToAction("Index");
+                }
+              
             }
             catch
             {
                 return View();
             }
         }
-        public  int comparadorfilmes(string actual,string Other) {
+        public  int comparadornombres(string actual,string Other) {
            return Other.CompareTo(actual);
+        }
+        public int comparadorgeneros(Filme actual, Filme Other)
+        {
+
+            if (Other.genero.CompareTo(actual.genero) == 0)
+            {
+
+                return Other.Nombre.CompareTo(actual.Nombre);
+            }
+            else
+            {
+
+                return Other.genero.CompareTo(actual.genero);
+            }
+
+        }
+        public int comparadoranio(Filme actual, Filme Other)
+        {
+            if (Other.anio.CompareTo(actual.anio) == 0)
+            {
+
+                return Other.Nombre.CompareTo(actual.Nombre);
+            }
+            else
+            {
+
+                return Other.anio.CompareTo(actual.anio);
+            }
         }
 
         // GET: Filme/Edit/5
