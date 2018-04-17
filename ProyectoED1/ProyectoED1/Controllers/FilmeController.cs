@@ -7,6 +7,7 @@ using ProyectoED1.DBContest;
 using ProyectoED1.Models;
 using ProyectoED1.Controllers;
 using TDA;
+using System.Net;
 namespace ProyectoED1.Controllers
 {
     public class FilmeController : Controller
@@ -196,19 +197,54 @@ namespace ProyectoED1.Controllers
         }
 
         // GET: Filme/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Filme filme_buscado = db.catalogonombre.buscar(id);
+
+            if (filme_buscado == null)
+            {
+
+                return HttpNotFound();
+            }
+            return View(filme_buscado);
         }
 
         // POST: Filme/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(string id, FormCollection collection)
         {
+
+            
             try
             {
+                Filme filmebuscado = db.catalogonombre.buscar(id);
                 // TODO: Add delete logic here
+                db.catalogonombre.eliminar(filmebuscado.Nombre);
+                db.catalogogenero.eliminar(filmebuscado);
+                  db.catalogoanio.eliminar(filmebuscado);
+                db.filmes_lista.Clear();
+                db.catalogonombre.recorrer(asignar_comparador_nombre);
+                db.catalogogenero.recorrer(asignar_comparador_genero);
+                db.catalogoanio.recorrer(asignar_comparador_anio);
+                if (seleccionorden == "genero")
+                {
+                    db.catalogogenero.recorrer(pasar_a_lista_gen);
 
+                }
+                else if (seleccionorden == "nombre")
+                {
+                    db.catalogonombre.recorrer(pasar_a_lista);
+
+                }
+                else if (seleccionorden == "anio")
+                {
+                    db.catalogoanio.recorrer(pasar_a_lista_int);
+
+                }
                 return RedirectToAction("Index");
             }
             catch

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using ProyectoED1.DBContest;
 using ProyectoED1.Models;
 using TDA;
+using System.Net;
 namespace ProyectoED1.Controllers
 {
     public class UsuarioController : Controller
@@ -121,25 +122,27 @@ namespace ProyectoED1.Controllers
             }
         }
 
-        // GET: Usuario/Delete/5
-        public ActionResult Delete(string id)
-        {
-            return View();
-        }
+        
 
-        // POST: Usuario/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+ 
+        public ActionResult Deletewa(string id)
         {
             try
             {
+                Filme filmebuscado = db.catalogonombre.buscar(id);
                 // TODO: Add delete logic here
+                db.usuariologeado.WatchList.eliminar(filmebuscado.Nombre);
+                
+                db.filmes_lista.Clear();
+                
+                db.usuariologeado.WatchList.recorrer(asignar_comparador);
 
-                return RedirectToAction("Index");
+                db.usuariologeado.WatchList.recorrer(pasar_a_lista);
+                return RedirectToAction("Details", new { id = db.usuariologeado.username });
             }
             catch
             {
-                return View();
+                return RedirectToAction("Details", new { id = db.usuariologeado.username });
             }
         }
     }

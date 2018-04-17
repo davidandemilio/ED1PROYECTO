@@ -17,6 +17,7 @@ namespace TDA
         private K keynodotarget;
         private K key_target;
 
+        List<elemento<T, K>> almacenador = new List<elemento<T, K>>();
         public ArbolB(int _grado,K llave,ComparadorNodosDelegate<K> comparador) {
             grado = _grado;
             raiz = new Nodo<T, K>(llave);
@@ -50,39 +51,69 @@ namespace TDA
 
         public void eliminar(K llave)
         {
-            buscar(llave);
 
+            almacenador.Clear();
 
-            if (target.hijos.Count == 0) {
+            guardar(raiz, llave);
+            Clear(raiz);
 
-               Nodo<T,K> hermanoderecho= target.padre.hijos.ElementAt(target.padre.hijos.IndexOfKey(keynodotarget) + 1).Value;
+            regresar(raiz);
 
-                if (hermanoderecho.elementos.Count > 1)
-                {
-                    target.elementos.Remove(key_target);
-                    target.elementos.Add(hermanoderecho.elementos.ElementAt(0).Key, hermanoderecho.elementos.ElementAt(0).Value);
-                    hermanoderecho.elementos.RemoveAt(0);
-                }
-                else {
-
-                }
-            }
-            else
-            {
-
-
-            }
-            if (target.elementos.Count > 1)
-            {
-                target.elementos.Remove(key_target);
-                
-            }
-            else {
-
-
-            }
-            
         }
+
+        public void regresar(Nodo<T,K> nodo_start) {
+            foreach (elemento<T,K> elemento in almacenador) {
+
+                insertar(elemento.valor,elemento.llave);
+            }
+        }
+
+        public void guardar(Nodo<T,K> nodo_start,K llave)
+        {
+            
+
+
+
+            if (nodo_start != null)
+            {
+                for (int i = 0; i <= nodo_start.elementos.Count - 1; i++)
+                {
+                    if (nodo_start.hijos.Count != 0)
+                    {
+                        guardar(nodo_start.hijos.ElementAt(i).Value,llave);
+
+                    }
+                    if (nodo_start.elementos.ElementAt(i).Value.CompareTo(llave)!=0){
+
+                        almacenador.Add(nodo_start.elementos.ElementAt(i).Value);
+                    }
+                 
+
+
+                }
+                if (nodo_start.hijos.Count != 0)
+                {
+
+                    guardar(nodo_start.hijos.ElementAt(nodo_start.hijos.Count - 1).Value,llave);
+                }
+
+
+            }
+
+        }
+
+        public  void Clear(Nodo<T,K> nodo_start) {
+
+            raiz.elementos.Clear();
+            raiz.hijos.Clear();
+        }
+
+
+       
+
+
+        
+        
 
         public T  buscar(K llave)
         {
