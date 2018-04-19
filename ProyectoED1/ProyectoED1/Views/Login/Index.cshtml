@@ -3,25 +3,63 @@
     ViewBag.Title = "Index";
 
 }
+<style>
+    div {
+        background-image: url(https://i.pinimg.com/originals/53/a4/aa/53a4aaa1fa17a147e64b74172e6119fc.jpg);
+    }
+    </style>
+<style type="text/css">
+    .btn {
+        text-decoration: none;
+        padding: 10px;
+        font-family: arial;
+        text-transform: uppercase;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-weight: 800;
+        font-size: 20px;
+        color: black;
+        background-color:  #d3182c;
+    }
 
-<p><a href="/Usuario/Create" class="btn btn-primary btn-lg">Registrarse&raquo;</a></p>
-
-
-<h2>Login</h2>
-
+        .btn:hover {
+            color: #9b0e0e;
+            background-color: #bc6355;
+            text-decoration: none;
+        }
+</style>
 @using (Html.BeginForm("verificar", "Login", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    <div class="form-group">
-        
-        <label>usuario</label>
-        <input type="text" name="user" />
-        <br>
-        <br>
-        <label>password</label>
-        <input type="password" name="pass" />
-        <input type="submit" value="Login" />
-    </div>
+    <center>
+        <center>
+            <h1><font color="White">Inicia Seción</font></h1>
+        </center>
+            <label><font color="White">Usuario</font></label>
+            <p><input type="text" name="user" /></p>
+            <label><font color="White">Contraseña</font></label>
+            <p><input type="password" name="pass" /></p>
+            <br />
+            <p><input type="submit" value="Login" /></p>
+        <br />
+        <br />
+        <br />
+        <p>¿Primera vez en GUAFLIX?</p>
+        <p>
+        <a class="btn" href="/Usuario/Create">Suscríbete</a></p>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+    </center>
 }
+
 
 
