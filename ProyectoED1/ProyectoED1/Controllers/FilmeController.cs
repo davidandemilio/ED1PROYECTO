@@ -59,6 +59,8 @@ namespace ProyectoED1.Controllers
                 elemento<Filme, string> nuevo_filme = new elemento<Filme, string>(partido,partido.Nombre,comparadorfilmes);
                
                 db.catalogo.insertar(nuevo_filme.valor,nuevo_filme.valor.Nombre);
+
+                
                
                 db.catalogo.recorrer(pasar_a_lista);
 
