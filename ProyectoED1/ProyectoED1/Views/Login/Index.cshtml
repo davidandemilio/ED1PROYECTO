@@ -11,7 +11,7 @@
 <style type="text/css">
     .btn {
         text-decoration: none;
-        padding: 25px;
+        padding: 10px;
         font-family: arial;
         text-transform: uppercase;
         padding-left: 10px;
@@ -19,7 +19,7 @@
         font-weight: 800;
         font-size: 20px;
         color: black;
-        background-color: #9b0e0e;
+        background-color:  #d3182c;
     }
 
         .btn:hover {
@@ -35,14 +35,15 @@
 {
     @Html.AntiForgeryToken()
     <center>
-        <div class="form-group">
-
-            <label><font color="White">usuario</font></label>
+            <label><font color="White">Usuario</font></label>
             <p><input type="text" name="user" /></p>
-            <label><font color="White">password</font></label>
+            <label><font color="White">Contraseña</font></label>
             <p><input type="password" name="pass" /></p>
+            <br />
             <p><input type="submit" value="Login" /></p>
-        </div>
+        <br />
+        <br />
+        <br />
         <p>¿Primera vez en GUAFLIX?</p>
         <p>
         <a class="btn" href="/Usuario/Create">Suscríbete</a></p>
