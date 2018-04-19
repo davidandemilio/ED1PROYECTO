@@ -28,13 +28,13 @@
             text-decoration: none;
         }
 </style>
-<center>
-    <h1><font color="White">Inicia Seción</font></h1>
-</center>
 @using (Html.BeginForm("verificar", "Login", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <center>
+        <center>
+            <h1><font color="White">Inicia Seción</font></h1>
+        </center>
             <label><font color="White">Usuario</font></label>
             <p><input type="text" name="user" /></p>
             <label><font color="White">Contraseña</font></label>
