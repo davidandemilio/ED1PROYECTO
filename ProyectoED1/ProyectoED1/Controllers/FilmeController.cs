@@ -97,8 +97,8 @@ namespace ProyectoED1.Controllers
         {
          
 
-            try
-            {
+            //try
+            //{
                 if (!db.catalogonombre.existe(filme.Nombre))
                 {
                     db.filmes_lista.Clear();
@@ -112,6 +112,7 @@ namespace ProyectoED1.Controllers
                     db.catalogonombre.insertar(nuevo_filme_no.valor, nuevo_filme_no.valor.Nombre);
                     db.catalogogenero.insertar(nuevo_filme_ge.valor, nuevo_filme_ge.valor);
                     db.catalogoanio.insertar(nuevo_filme_an.valor, nuevo_filme_an.valor);
+                    db.carga.CrearJsonNombre(filme);
 
                     if (seleccionorden == "genero")
                     {
@@ -136,11 +137,11 @@ namespace ProyectoED1.Controllers
                     return RedirectToAction("Index");
                 }
               
-            }
-            catch
-            {
-                return View();
-            }
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
         }
         public  int comparadornombres(string actual,string Other) {
            return Other.CompareTo(actual);
@@ -251,6 +252,31 @@ namespace ProyectoED1.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        public ActionResult CargaJsonUsuario(HttpPostedFileBase archivo)
+        {
+            CargaArchivo<Usuario, string> carga = new CargaArchivo<Usuario, string>();
+            db.usuarios = carga.CargajsonUsuario(archivo, Server);
+            Response.Write("<script>alert('Arbol de Usuarios creado');</script>");
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult CargaJsonCatalogo(HttpPostedFileBase archivo)
+        {
+            CargaArchivo<Usuario, string> carga = new CargaArchivo<Usuario, string>();
+            db.catalogonombre = carga.CargajsonCatalogo(archivo, Server);
+            db.catalogogenero = carga.CargajsonCatalogoGenero();
+            db.catalogoanio = carga.CargajsonCatalogoAño();
+            db.catalogonombre.recorrer(pasar_a_lista);
+            db.catalogogenero.recorrer(pasar_a_lista_gen);
+            db.catalogoanio.recorrer(pasar_a_lista_int);
+            Response.Write("<script>alert('Arbol de Filmes creado');</script>");
+
+            return RedirectToAction("Index");
         }
     }
 }

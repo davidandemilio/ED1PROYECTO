@@ -62,6 +62,7 @@ namespace ProyectoED1.Controllers
                 db.catalogonombre.recorrer(asignar_comparador);
                 db.usuariologeado.WatchList.insertar(db.catalogonombre.buscar(id), db.catalogonombre.buscar(id).Nombre);
                 db.usuariologeado.WatchList.recorrer(pasar_a_lista);
+                db.carga.CrearJsonWatchlist(db.usuariologeado.WatchList_lista, db.usuariologeado.username);
                 return RedirectToAction("Details", new { id = db.usuariologeado.username });
             }
            
@@ -88,6 +89,8 @@ namespace ProyectoED1.Controllers
                 }
                 else {
                     db.usuarios.insertar(user,user.username);
+                    db.carga.obtenerArbolB(db.usuarios);
+                    db.carga.CrearJsonUsuarios(user, Server);
                     Response.Write("<script>alert('usuario creado');</script>");
                     return View();
                 }
