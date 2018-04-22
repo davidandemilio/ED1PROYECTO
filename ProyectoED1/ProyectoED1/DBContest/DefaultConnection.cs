@@ -5,6 +5,8 @@ using System.Web;
 using ProyectoED1.Models;
 using TDA;
 using TDA.Interfaces;
+using ProyectoED1.Controllers;
+
 namespace ProyectoED1.DBContest
 {
     public class DefaultConnection<T,K>
@@ -17,6 +19,7 @@ namespace ProyectoED1.DBContest
         public ArbolB<Filme, string> catalogonombre = new ArbolB<Filme, string>(3,"", comparadorstring);
         public ArbolB<Filme, Filme> catalogogenero = new ArbolB<Filme, Filme>(3, null, comparadorgeneros);
         public ArbolB<Filme, Filme> catalogoanio = new ArbolB<Filme, Filme>(3, null, comparadoranio);
+        public CargaArchivo<Usuario, string> carga = new CargaArchivo<Usuario, string>();
 
 
         public List<string> Ids = new List<string>();

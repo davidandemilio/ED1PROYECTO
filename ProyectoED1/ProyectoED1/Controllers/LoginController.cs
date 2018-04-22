@@ -21,7 +21,7 @@ namespace ProyectoED1.Controllers
 
         public ActionResult verificar(string user, string pass)
         {
-            if(user=="admin"&& user == "admin")
+            if(user=="admin"&& pass == "admin")
             {
                 return RedirectToAction("Index", "Filme");
 

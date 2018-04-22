@@ -77,3 +77,23 @@
     </table>
 </body>
 </html>
+
+<h4>CONFIGURACIÓN</h4>
+<h5>Cargar archivo Json de Usuarios</h5>
+
+@using (Html.BeginForm("CargaJsonUsuario", "Filme", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        <input type="file" name="archivo" />
+        <input type="submit" value="Importar" />
+    </div>
+}
+<h5>Cargar archivo Json de Catalogo</h5>
+
+@using (Html.BeginForm("CargaJsonCatalogo", "Filme", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        <input type="file" name="archivo" />
+        <input type="submit" value="Importar" />
+    </div>
+}

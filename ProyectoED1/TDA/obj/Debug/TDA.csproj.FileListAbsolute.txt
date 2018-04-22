@@ -13,3 +13,8 @@ C:\Users\carlo\Desktop\PY1\ED1PROYECTO\ProyectoED1\TDA\bin\Debug\TDA.pdb
 C:\Users\carlo\Desktop\PY1\ED1PROYECTO\ProyectoED1\TDA\obj\Debug\TDA.csprojResolveAssemblyReference.cache
 C:\Users\carlo\Desktop\PY1\ED1PROYECTO\ProyectoED1\TDA\obj\Debug\TDA.dll
 C:\Users\carlo\Desktop\PY1\ED1PROYECTO\ProyectoED1\TDA\obj\Debug\TDA.pdb
+C:\Users\Luis Emilio\Desktop\Tercer Ciclo\Estructura de Datos\ED\ED1PROYECTO\ProyectoED1\TDA\bin\Debug\TDA.dll
+C:\Users\Luis Emilio\Desktop\Tercer Ciclo\Estructura de Datos\ED\ED1PROYECTO\ProyectoED1\TDA\bin\Debug\TDA.pdb
+C:\Users\Luis Emilio\Desktop\Tercer Ciclo\Estructura de Datos\ED\ED1PROYECTO\ProyectoED1\TDA\obj\Debug\TDA.csprojResolveAssemblyReference.cache
+C:\Users\Luis Emilio\Desktop\Tercer Ciclo\Estructura de Datos\ED\ED1PROYECTO\ProyectoED1\TDA\obj\Debug\TDA.dll
+C:\Users\Luis Emilio\Desktop\Tercer Ciclo\Estructura de Datos\ED\ED1PROYECTO\ProyectoED1\TDA\obj\Debug\TDA.pdb
