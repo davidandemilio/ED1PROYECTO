@@ -22,6 +22,7 @@ namespace ProyectoED1.Controllers
 
         // GET: Usuario/Details/5
      
+            //Se muestran los detalles del Id de ususario que se desea ver
         public ActionResult Details(string id)
         {
             Usuario usuario_buscado = db.usuarios.buscar(id);
@@ -35,10 +36,12 @@ namespace ProyectoED1.Controllers
 
             return View();
         }
+        //Se le asigna una llave para poder comparar los filmes
         public void asignar_comparador(elemento<Filme, string> actual)
         {
             actual.comparador = comparadorfilmes;
         }
+        //Se desloguea el usuario y se manda al login para volver a iniciar una sesion
         public ActionResult logout()
         {
             db.usuarios.buscar(db.usuariologeado.username).WatchList = db.usuariologeado.WatchList;
@@ -48,14 +51,17 @@ namespace ProyectoED1.Controllers
 
             return RedirectToAction("Index","Login");
         }
+        //Para agregar films a su watchlist
         public ActionResult Agregar(string id)
         {
+            //Si ya posee este filme en su lista
             if (db.usuariologeado.WatchList.existe(id))
             {
                 Response.Write("<script>alert('Ya tiene esta pelicula en su watchlist');</script>");
                 return RedirectToAction("Catalogo_user", "Filme");
                 
             }
+            //Agrega la pelicula a su whatchlist y redirecciona a los detalles del usuario
             else {
                 db.usuariologeado.WatchList_lista.Clear();
                 db.usuariologeado.WatchList.recorrer(asignar_comparador);
@@ -67,10 +73,12 @@ namespace ProyectoED1.Controllers
             }
            
         }
+        //Comparador de las peliculas en el whatchlist
         public static int comparadorfilmes(string actual, string Other)
         {
             return Other.CompareTo(actual);
         }
+        //Se pasa a lista las peliculas para poder manipularlas de una manera mas facil en la eliminacion
         public void pasar_a_lista(elemento<Filme, string> actual)
         {
             db.usuariologeado.WatchList_lista.Add(actual.valor);
