@@ -132,6 +132,7 @@ namespace ProyectoED1.Controllers
         {
             try
             {
+                db.usuariologeado.WatchList_lista.Clear();
                 Filme filmebuscado = db.catalogonombre.buscar(id);
                 // TODO: Add delete logic here
                 db.usuariologeado.WatchList.eliminar(filmebuscado.Nombre);

@@ -23,7 +23,9 @@ namespace ProyectoED1.Controllers
         {
             if(user=="admin"&& pass == "admin")
             {
+                db.usuariologeado = null;
                 return RedirectToAction("Index", "Filme");
+            
 
             } else {
                 Usuario usuario = null;

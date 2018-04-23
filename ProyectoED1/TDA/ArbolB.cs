@@ -108,12 +108,15 @@ namespace TDA
             raiz.hijos.Clear();
         }
 
-
        
 
 
-        
-        
+     
+
+
+
+
+
 
         public T  buscar(K llave)
         {

@@ -17,7 +17,8 @@ namespace ProyectoED1.Controllers
         string seleccionorden="nombre";
         // GET: Filme
         public ActionResult Index()
-        { 
+        {
+            
            
             return View(db.filmes_lista.ToList());
           
@@ -28,10 +29,33 @@ namespace ProyectoED1.Controllers
             return View(db.filmes_lista.ToList());
         }
 
+        public ActionResult buscar(string buscado)
+        {
+
+            if (db.catalogonombre.buscar(buscado) != null) {
+                db.filmes_lista.Clear();
+                db.filmes_lista.Add(db.catalogonombre.buscar(buscado));
+            }
+          
+
+
+            if (db.usuariologeado == null)
+            {
+                return RedirectToAction("Index");
+
+            }
+            else {
+
+                return RedirectToAction("Catalogo_user");
+
+            }
+        }
+
         public void pasar_a_lista(elemento<Filme,string> actual)
         {
             db.filmes_lista.Add(actual.valor);
         }
+
 
         public void pasar_a_lista_gen(elemento<Filme, Filme> actual)
         {
@@ -59,7 +83,7 @@ namespace ProyectoED1.Controllers
             db.filmes_lista.Clear();
             if (orden == "genero")
             {
-                
+
                 db.catalogogenero.recorrer(pasar_a_lista_gen);
 
             }
@@ -74,7 +98,18 @@ namespace ProyectoED1.Controllers
 
             }
 
-            return RedirectToAction("Catalogo_user");
+            if (db.usuariologeado == null)
+            {
+                return RedirectToAction("Index");
+            }
+            else {
+
+
+                return RedirectToAction("Catalogo_user");
+
+            }
+
+           
         }
 
 
@@ -257,6 +292,7 @@ namespace ProyectoED1.Controllers
         [HttpPost]
         public ActionResult CargaJsonUsuario(HttpPostedFileBase archivo)
         {
+
             CargaArchivo<Usuario, string> carga = new CargaArchivo<Usuario, string>();
             db.usuarios = carga.CargajsonUsuario(archivo, Server);
             Response.Write("<script>alert('Arbol de Usuarios creado');</script>");
@@ -267,13 +303,13 @@ namespace ProyectoED1.Controllers
         [HttpPost]
         public ActionResult CargaJsonCatalogo(HttpPostedFileBase archivo)
         {
+            db.filmes_lista.Clear();
             CargaArchivo<Usuario, string> carga = new CargaArchivo<Usuario, string>();
             db.catalogonombre = carga.CargajsonCatalogo(archivo, Server);
             db.catalogogenero = carga.CargajsonCatalogoGenero();
             db.catalogoanio = carga.CargajsonCatalogoAño();
             db.catalogonombre.recorrer(pasar_a_lista);
-            db.catalogogenero.recorrer(pasar_a_lista_gen);
-            db.catalogoanio.recorrer(pasar_a_lista_int);
+           
             Response.Write("<script>alert('Arbol de Filmes creado');</script>");
 
             return RedirectToAction("Index");

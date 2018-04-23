@@ -10,7 +10,7 @@
     <title>View</title>
 </head>
 <body>
-
+    <h5>mostrar por:</h5>
     @using (Html.BeginForm("cambiar_orden", "Filme", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div class="form-group">
@@ -26,6 +26,22 @@
             </select>
 
             <input type="submit" value="Seleccionar" />
+
+
+
+        </div>
+
+
+    }
+
+
+    @using (Html.BeginForm("buscar", "Filme", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-group">
+
+            <input type="text" name="buscado" />
+
+            <input type="submit" value="buscar" />
 
 
 
