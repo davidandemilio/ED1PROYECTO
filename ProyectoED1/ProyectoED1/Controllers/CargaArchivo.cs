@@ -93,7 +93,12 @@ namespace ProyectoED1.Controllers
                 throw new Exception("Acceso denegado para el disco");
             }
         }
-
+        /// <summary>
+        /// alamacena un json del usuario
+        /// </summary>
+        /// <param name="archivo"></param>
+        /// <param name="SERVIDOR"></param>
+        /// <returns></returns>
         public ArbolB<Usuario, string> CargajsonUsuario(HttpPostedFileBase archivo, HttpServerUtilityBase SERVIDOR)
         {
             ArbolB<Usuario, string> arbol_a_insertar = new ArbolB<Usuario, string>(3, "", comparadorusuarios);

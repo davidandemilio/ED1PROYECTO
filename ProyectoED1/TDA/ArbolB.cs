@@ -18,6 +18,13 @@ namespace TDA
         private K key_target;
 
         List<elemento<T, K>> almacenador = new List<elemento<T, K>>();
+
+        /// <summary>
+        /// constructor arbol
+        /// </summary>
+        /// <param name="_grado"> grado del arbol</param>
+        /// <param name="llave"> llave inicial</param>
+        /// <param name="comparador"> delegate que comapara</param>
         public ArbolB(int _grado,K llave,ComparadorNodosDelegate<K> comparador) {
             grado = _grado;
             raiz = new Nodo<T, K>(llave);
@@ -28,6 +35,11 @@ namespace TDA
           
          
         }
+        /// <summary>
+        /// inserta en raiz si se puede si no llama al metodo intsertar en hojas
+        /// </summary>
+        /// <param name="valor"></param>
+        /// <param name="llave"></param>
         public void insertar(T valor, K llave) {
 
             elemento<T, K> elemento_insertar = new elemento<T, K>(valor, llave,comparador_);
@@ -49,6 +61,10 @@ namespace TDA
             }
         }
 
+        /// <summary>
+        /// recorre el aorbol hasta que busca la llave a eliminar
+        /// </summary>
+        /// <param name="llave"> llave que se desea eliminar</param>
         public void eliminar(K llave)
         {
 
@@ -61,6 +77,10 @@ namespace TDA
 
         }
 
+        /// <summary>
+        /// almacena la lista filtrada cuando se elimina
+        /// </summary>
+        /// <param name="nodo_start"> nodo desde donde se empezara a insertar</param>
         public void regresar(Nodo<T,K> nodo_start) {
             foreach (elemento<T,K> elemento in almacenador) {
 
@@ -68,6 +88,11 @@ namespace TDA
             }
         }
 
+        /// <summary>
+        /// guarda una lista de elementos menos el que se dese aliminar
+        /// </summary>
+        /// <param name="nodo_start"> nodo desde don empezara  aevaluar</param>
+        /// <param name="llave"> llave a filtrar</param>
         public void guardar(Nodo<T,K> nodo_start,K llave)
         {
             
@@ -102,6 +127,10 @@ namespace TDA
 
         }
 
+        /// <summary>
+        /// limipia todo el arbol
+        /// </summary>
+        /// <param name="nodo_start"></param>
         public  void Clear(Nodo<T,K> nodo_start) {
 
             raiz.elementos.Clear();
@@ -117,7 +146,11 @@ namespace TDA
 
 
 
-
+        /// <summary>
+        /// buca una llave mandando a llamar al buscador interno 
+        /// </summary>
+        /// <param name="llave">llave que se desea buscar</param>
+        /// <returns></returns>
         public T  buscar(K llave)
         {
             buscado = default(T);
@@ -129,6 +162,11 @@ namespace TDA
             return buscado;
         }
 
+        /// <summary>
+        /// verifica si un elemento esta dentro del arbol
+        /// </summary>
+        /// <param name="llave"> llave a aevaluar si existe</param>
+        /// <returns> true si existe false si no</returns>
         public bool existe(K llave)
 
         {
@@ -144,6 +182,11 @@ namespace TDA
         }
 
 
+        /// <summary>
+        /// recorre el arbol recursivamente hasta que encuentra la llave deseada
+        /// </summary>
+        /// <param name="nodo_start">nodo desde donde se empezara a buscar</param>
+        /// <param name="llave">llave que se desea encontrar</param>
         public void buscar_interno(Nodo<T, K> nodo_start, K llave)
         {
             for (int j = 0; j <= nodo_start.elementos.Count - 1; j++)
@@ -177,13 +220,21 @@ namespace TDA
         }
 
 
-
+        /// <summary>
+        /// manda  allamar al recorrer interno
+        /// </summary>
+        /// <param name="recorrido">que hara con cada elemento del arbol</param>
         public void recorrer( RecorridoDelegate<T, K> recorrido)
         {
             recorrer_interno(raiz,recorrido);
 
 
         }
+        /// <summary>
+        /// recorre cada elmento del arbol recursivamente
+        /// </summary>
+        /// <param name="nodo_start">donde empezara el recorrido</param>
+        /// <param name="recorrido">que hara con cada elemento del arbol</param>
         public void recorrer_interno(Nodo<T, K> nodo_start,RecorridoDelegate<T,K> recorrido)
         {
             if (nodo_start != null) {
@@ -219,12 +270,20 @@ namespace TDA
             }
         }
 
+        /// <summary>
+        /// cuenta el numero de elementos del arbol
+        /// </summary>
+        /// <returns></returns>
         public int contar() {
             contar_interno(raiz);
             return noelementos;
         }
 
 
+        /// <summary>
+        /// metodo que separa el nodo cuando rebasa su limite
+        /// </summary>
+        /// <param name="actual"> nodo que se partira</param>
         public void separar(Nodo<T, K> actual)
         {
 
@@ -375,6 +434,12 @@ namespace TDA
 
         }
 
+        /// <summary>
+        /// inserta elementos en los nodo hoja
+        /// </summary>
+        /// <param name="valor">elementoa  insertar</param>
+        /// <param name="llave"> llave del elemnto</param>
+        /// <param name="nod">nodo donde se emepezara a insertar</param>
         public void insertar_hojas(T valor, K llave,Nodo<T,K> nod)
         {
             if (nod.hijos.Count == 0)

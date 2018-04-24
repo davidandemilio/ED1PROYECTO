@@ -135,7 +135,11 @@ namespace ProyectoED1.Controllers
 
         
 
- 
+ /// <summary>
+ /// borra un elemento del watcjlist del ususraio
+ /// </summary>
+ /// <param name="id"> id del filme e a borrar</param>
+ /// <returns></returns>
         public ActionResult Deletewa(string id)
         {
             try
