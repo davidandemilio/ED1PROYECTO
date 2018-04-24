@@ -3,6 +3,33 @@
 
 
 <!DOCTYPE html>
+<style>
+    div {
+        background-image: url(https://images7.alphacoders.com/374/374296.jpg);
+    }
+    table {
+   
+   width: 100%;
+   border: 1px solid #000;
+}
+th, td {
+   width: 25%;
+   text-align: left;
+   vertical-align: top;
+   border: 1px solid #000;
+   border-collapse: collapse;
+   padding: 0.3em;
+   caption-side: bottom;
+}
+caption {
+   padding: 0.3em;
+   color: #fff;
+    background: #000;
+}
+th {
+   background: #2d6cdc ;
+}
+</style>
 
 <html>
 <head>
@@ -10,11 +37,12 @@
     <title>Catalogo_user</title>
 </head>
 <body>
-    <h5>mostrar por:</h5>
-    @using (Html.BeginForm("cambiar_orden", "Filme", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <div class="form-group">
-
+    <br />
+    <p align="center"><IMG src="https://lh3.googleusercontent.com/1HYbBcy3vSDnDXaS_F9-GUVZkf6vc948SRpFMzSRa3G0y5sZDKxvwq9huDzeqNZTM-Q=w300" width="100" height="100" /> <IMG src="https://www.fiweh.com/wp-content/uploads/2017/10/thewatchlist.png" width="500" height="100" /> </p>
+        <h5>mostrar por:</h5>
+    <br />
+        @using (Html.BeginForm("cambiar_orden", "Filme", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
             <select name="orden">
 
                 <option>nombre</option>
@@ -27,65 +55,64 @@
 
             <input type="submit" value="Seleccionar" />
 
-
-
-        </div>
-
-
-    }
-
-    @using (Html.BeginForm("buscar", "Filme", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <div class="form-group">
+        }
+    <br />
+        @using (Html.BeginForm("buscar", "Filme", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
 
             <input type="text" name="buscado" />
 
             <input type="submit" value="buscar" />
 
+        }
+    <br />
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.tipo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.anio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.genero)
+                </th>
+                <th></th>
+            </tr>
 
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tipo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.anio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.genero)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Agregar", "Agregar", new { controller = "Usuario", id = item.Nombre }) |
 
-        </div>
+                    </td>
+                </tr>
+            }
 
-
-    }
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.tipo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.anio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.genero)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.tipo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.anio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.genero)
-            </td>
-            <td>
-                @Html.ActionLink("Agregar", "Agregar",new { controller = "Usuario", id = item.Nombre }) |
-              
-            </td>
-        </tr>
-    }
-    
-    </table>
+        </table>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
 </body>
 </html>

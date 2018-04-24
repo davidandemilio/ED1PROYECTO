@@ -3,7 +3,33 @@
 
 
 <!DOCTYPE html>
-
+<style>
+    div {
+        background-image: url(https://images7.alphacoders.com/374/374296.jpg);
+    }
+    table {
+   
+   width: 100%;
+   border: 1px solid #000;
+}
+th, td {
+   width: 25%;
+   text-align: left;
+   vertical-align: top;
+   border: 1px solid #000;
+   border-collapse: collapse;
+   padding: 0.3em;
+   caption-side: bottom;
+}
+caption {
+   padding: 0.3em;
+   color: #fff;
+    background: #000;
+}
+th {
+   background: #f2f4f7  ;
+}
+</style>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -13,7 +39,6 @@
     <h5>mostrar por:</h5>
     @using (Html.BeginForm("cambiar_orden", "Filme", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <div class="form-group">
 
             <select name="orden">
 
@@ -29,24 +54,16 @@
 
 
 
-        </div>
-
 
     }
 
 
     @using (Html.BeginForm("buscar", "Filme", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <div class="form-group">
 
             <input type="text" name="buscado" />
 
             <input type="submit" value="buscar" />
-
-
-
-        </div>
-
 
     }
     <p>
@@ -99,17 +116,13 @@
 
 @using (Html.BeginForm("CargaJsonUsuario", "Filme", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <div class="form-group">
         <input type="file" name="archivo" />
         <input type="submit" value="Importar" />
-    </div>
 }
 <h5>Cargar archivo Json de Catalogo</h5>
 
 @using (Html.BeginForm("CargaJsonCatalogo", "Filme", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <div class="form-group">
         <input type="file" name="archivo" />
         <input type="submit" value="Importar" />
-    </div>
 }

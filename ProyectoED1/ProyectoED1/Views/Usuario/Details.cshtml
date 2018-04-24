@@ -5,7 +5,6 @@
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -16,35 +15,35 @@
         <h4>Usuario</h4>
         <hr />
         <dl class="dl-horizontal">
-            
+
             <dt>
-               
+
                 @Html.DisplayNameFor(model => model.nombre)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.nombre)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.apellido)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.apellido)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.username)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.username)
             </dd>
     </dl>
             <h3>Agregar un filme tu watch list</h3>
             <p><a href="/Filme/Catalogo_user" class="btn btn-primary btn-lg">Ir&raquo;</a></p>
-            @Html.ActionLink("Logout", "logout") 
+            @Html.ActionLink("Logout", "logout")
     </div>
 
     <table>@if (Model.WatchList_lista != null)
@@ -65,7 +64,7 @@
                     @Html.DisplayFor(modelItem => item.genero) |
                 </td>
                 <td>
-                   
+
                     @Html.ActionLink("Delete", "Deletewa", new { id=item.Nombre})
                 </td>
             </tr>
@@ -74,9 +73,9 @@
         }
 
     }</table>
-     
-      
-       
+
+
+
     <br>
        <p>
         @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |

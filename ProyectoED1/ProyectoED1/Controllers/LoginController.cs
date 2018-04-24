@@ -18,9 +18,10 @@ namespace ProyectoED1.Controllers
 
 
 
-
+        //Se le pasa la contraseña y usuario al metodo para verificar
         public ActionResult verificar(string user, string pass)
         {
+            //Si la contraseña y usuario son admin, se logea como administrador para agregar los filmes
             if(user=="admin"&& pass == "admin")
             {
                 db.usuariologeado = null;
@@ -28,6 +29,7 @@ namespace ProyectoED1.Controllers
             
 
             } else {
+                //Se verifica si el usuario que se ingreso existe.
                 Usuario usuario = null;
                 Usuario buscado = db.usuarios.buscar(user);
                 if (buscado != null)
@@ -37,7 +39,7 @@ namespace ProyectoED1.Controllers
                         usuario = buscado;
                     }
                 }
-
+                //EL usuario fue encontrado y se muestran los detalles de ese usuario
                 if (usuario != null)
                 {
                     UsuarioController uscontro = new UsuarioController();

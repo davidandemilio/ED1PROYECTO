@@ -28,7 +28,7 @@ namespace ProyectoED1.Controllers
         {
             return View(db.filmes_lista.ToList());
         }
-
+        //Funcion para buscar un usuario
         public ActionResult buscar(string buscado)
         {
 
@@ -50,34 +50,38 @@ namespace ProyectoED1.Controllers
 
             }
         }
-
+        //Se agregan a una lista los filmes
         public void pasar_a_lista(elemento<Filme,string> actual)
         {
             db.filmes_lista.Add(actual.valor);
         }
 
-
+       //Se pasan a una lista los valores por genero
         public void pasar_a_lista_gen(elemento<Filme, Filme> actual)
         {
             db.filmes_lista.Add(actual.valor);
         }
+        //Se pasan a una lista los valores por año
         public void pasar_a_lista_int(elemento<Filme, Filme> actual)
         {
             db.filmes_lista.Add(actual.valor);
         }
-
+        //Se le agrega una llave por nombre al filme
         public void asignar_comparador_nombre(elemento<Filme, string> actual)
         {
             actual.comparador = comparadornombres;
         }
+        //Se le agrega una llave por genero
         public void asignar_comparador_genero(elemento<Filme, Filme> actual)
         {
             actual.comparador = comparadorgeneros;
         }
+        //Se le agrega una llave por año
         public void asignar_comparador_anio(elemento<Filme, Filme> actual)
         {
             actual.comparador = comparadoranio;
         }
+        //Se cambia el orden en el que se le es mostrada la watchlist al usuario
         public ActionResult cambiar_orden(string orden) {
             seleccionorden = orden;
             db.filmes_lista.Clear();
