@@ -19,7 +19,7 @@ namespace ProyectoED1.Controllers
         string JsonUsuarios;
         string JsonNombres;
         string JsonCatalogo;
-
+     
         public static int comparadorusuarios(string actual, string other)
         {
             return other.CompareTo(actual);
@@ -30,10 +30,10 @@ namespace ProyectoED1.Controllers
             arbolB_Usuario = _ArbolB;
         }
 
-        public void CrearJsonNombre(Filme filme)
+        public void CrearJsonNombre(List<Filme> _watchlist)
         {
-            string archivoNombre = JsonConvert.SerializeObject(filme);
-            JsonNombres = JsonNombres + ";" + archivoNombre;
+             string UsuarioWatchlist = JsonConvert.SerializeObject(_watchlist);
+
             string NombreArchivo = @"C:\Users\Public\catalogoNombre.json";
             string path = Path.GetPathRoot(NombreArchivo);
             FileIOPermission permiso = new FileIOPermission(FileIOPermissionAccess.Write, path);
@@ -49,7 +49,64 @@ namespace ProyectoED1.Controllers
             {
                 permiso.Demand();
                 StreamWriter escritor = new StreamWriter(NombreArchivo);
-                escritor.WriteLine(JsonNombres);
+                escritor.WriteLine(UsuarioWatchlist);
+                escritor.Close();
+            }
+            catch
+            {
+                throw new Exception("Acceso denegado para el disco");
+            }
+        }
+
+
+        public void CrearJsonGenero(List<Filme> _watchlist)
+        {
+            string UsuarioWatchlist = JsonConvert.SerializeObject(_watchlist);
+
+            string NombreArchivo = @"C:\Users\Public\catalogogenero.json";
+            string path = Path.GetPathRoot(NombreArchivo);
+            FileIOPermission permiso = new FileIOPermission(FileIOPermissionAccess.Write, path);
+
+            foreach (string f in Directory.GetFiles(@"C:\Users\Public"))
+            {
+                if (NombreArchivo == f)
+                {
+                    File.Delete(@"C:\Users\Public\catalogogenero.json");
+                }
+            }
+            try
+            {
+                permiso.Demand();
+                StreamWriter escritor = new StreamWriter(NombreArchivo);
+                escritor.WriteLine(UsuarioWatchlist);
+                escritor.Close();
+            }
+            catch
+            {
+                throw new Exception("Acceso denegado para el disco");
+            }
+        }
+
+        public void CrearJsonanio(List<Filme> _watchlist)
+        {
+            string UsuarioWatchlist = JsonConvert.SerializeObject(_watchlist);
+
+            string NombreArchivo = @"C:\Users\Public\catalogoanio.json";
+            string path = Path.GetPathRoot(NombreArchivo);
+            FileIOPermission permiso = new FileIOPermission(FileIOPermissionAccess.Write, path);
+
+            foreach (string f in Directory.GetFiles(@"C:\Users\Public"))
+            {
+                if (NombreArchivo == f)
+                {
+                    File.Delete(@"C:\Users\Public\catalogoanio.json");
+                }
+            }
+            try
+            {
+                permiso.Demand();
+                StreamWriter escritor = new StreamWriter(NombreArchivo);
+                escritor.WriteLine(UsuarioWatchlist);
                 escritor.Close();
             }
             catch
@@ -121,6 +178,7 @@ namespace ProyectoED1.Controllers
                 for (int i = 0; i < _Usuarios.Length - 1; i++)
                 {
                     _user = JsonConvert.DeserializeObject<Usuario>(_Usuarios[i]);
+                    
                     arbol_a_insertar.insertar(_user, _user.username);
                 }
                 return arbol_a_insertar;

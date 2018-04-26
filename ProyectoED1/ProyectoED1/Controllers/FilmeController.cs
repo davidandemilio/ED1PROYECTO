@@ -89,17 +89,19 @@ namespace ProyectoED1.Controllers
             {
 
                 db.catalogogenero.recorrer(pasar_a_lista_gen);
+                db.carga.CrearJsonGenero(db.filmes_lista);
 
             }
             else if (orden == "nombre")
             {
                 db.catalogonombre.recorrer(pasar_a_lista);
 
+
             }
             else if (orden == "año")
             {
                 db.catalogoanio.recorrer(pasar_a_lista_int);
-
+                db.carga.CrearJsonanio(db.filmes_lista);
             }
 
             if (db.usuariologeado == null)
@@ -151,7 +153,7 @@ namespace ProyectoED1.Controllers
                     db.catalogonombre.insertar(nuevo_filme_no.valor, nuevo_filme_no.valor.Nombre);
                     db.catalogogenero.insertar(nuevo_filme_ge.valor, nuevo_filme_ge.valor);
                     db.catalogoanio.insertar(nuevo_filme_an.valor, nuevo_filme_an.valor);
-                    db.carga.CrearJsonNombre(filme);
+                    
 
                     if (seleccionorden == "genero")
                     {
@@ -168,12 +170,13 @@ namespace ProyectoED1.Controllers
                         db.catalogoanio.recorrer(pasar_a_lista_int);
 
                     }
+                db.carga.CrearJsonNombre(db.filmes_lista);
 
-                    return RedirectToAction("Index");
+                return RedirectToAction("Index");
                 }
                 else {
-                    
-                    return RedirectToAction("Index");
+                db.carga.CrearJsonNombre(db.filmes_lista);
+                return RedirectToAction("Index");
                 }
               
             //}
@@ -285,6 +288,7 @@ namespace ProyectoED1.Controllers
                     db.catalogoanio.recorrer(pasar_a_lista_int);
 
                 }
+                db.carga.CrearJsonNombre(db.filmes_lista);
                 return RedirectToAction("Index");
             }
             catch
@@ -300,7 +304,7 @@ namespace ProyectoED1.Controllers
             CargaArchivo<Usuario, string> carga = new CargaArchivo<Usuario, string>();
             db.usuarios = carga.CargajsonUsuario(archivo, Server);
             Response.Write("<script>alert('Arbol de Usuarios creado');</script>");
-
+            db.carga.CrearJsonNombre(db.filmes_lista);
             return RedirectToAction("Index");
         }
 
@@ -315,7 +319,7 @@ namespace ProyectoED1.Controllers
             db.catalogonombre.recorrer(pasar_a_lista);
            
             Response.Write("<script>alert('Arbol de Filmes creado');</script>");
-
+            db.carga.CrearJsonNombre(db.filmes_lista);
             return RedirectToAction("Index");
         }
     }

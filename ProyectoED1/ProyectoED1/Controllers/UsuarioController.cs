@@ -154,6 +154,7 @@ namespace ProyectoED1.Controllers
                 db.usuariologeado.WatchList.recorrer(asignar_comparador);
 
                 db.usuariologeado.WatchList.recorrer(pasar_a_lista);
+                db.carga.CrearJsonWatchlist(db.usuariologeado.WatchList_lista, db.usuariologeado.username);
                 return RedirectToAction("Details", new { id = db.usuariologeado.username });
             }
             catch
